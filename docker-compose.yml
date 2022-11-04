@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+  mysql:
+    container_name: MYSQLPHPTEST
+    environment:
+      - MYSQL_ROOT_PASSWORD=ROOT
+    networks:
+      - apache
+    ports:
+      - "3306:3306"
+    image: "mysql"
+    volumes:
+      - C:\mysqlphp:/var/lib/mysql
+
+  apache:
+    depends_on:
+      - mysql
+    container_name: APACHEPHP
+    networks:
+      - apache
+    ports:
+      - "8080:80"
+    image: damienpm/php-apache-mysqli
+    volumes:
+      - C:\apache:/var/www/html/
+
+networks:
+  apache:
